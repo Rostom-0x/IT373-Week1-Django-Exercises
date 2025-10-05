@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Announcement Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if announcement %}
+        <h2>{{ announcement.title }}</h2>
+        
+        <p id="announcement-text">
+            <span id="short-text">{{ announcement.content|slice:":200" }}</span>
+            <span id="more-text" style="display:none;">{{ announcement.content|slice:"200:" }}</span>
+        </p>
+
+        <button class="btn btn-primary btn-sm mt-2" onclick="toggleReadMore()" id="read-more-btn">
+            Read more
+        </button>
+
+        <br>
+        <a href="{% url 'announcements:list' %}" class="btn btn-secondary mt-3">Back to list</a>
+    {% else %}
+        <p>Announcement not found.</p>
+    {% endif %}
+</div>
+
+<script>
+function toggleReadMore() {
+    let moreText = document.getElementById("more-text");
+    let btn = document.getElementById("read-more-btn");
+
+    if (moreText.style.display === "none") {
+        moreText.style.display = "inline";
+        btn.innerText = "Show less";
+    } else {
+        moreText.style.display = "none";
+        btn.innerText = "Read more";
+    }
+}
+</script>
+{% endblock %}
